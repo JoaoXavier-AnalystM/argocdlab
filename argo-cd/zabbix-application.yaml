@@ -6,12 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://seu-repo-git.com/sua-organizacao/zabbix-k8s'
+    repoURL: 'https://github.com/JoaoXavier-AnalystM/argocdlab.git'
     targetRevision: HEAD
     path: zabbix
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: zabbix
+    namespace: monitoring
   syncPolicy:
     automated:
       prune: true
