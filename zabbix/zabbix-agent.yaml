@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: zabbix-agent
-  namespace: monitoring 
+  namespace: monitoring
 spec:
   selector:
     matchLabels:
@@ -12,17 +12,21 @@ spec:
       labels:
         app: zabbix-agent
     spec:
-      hostNetwork: true 
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: zabbix-agent
-        image: zabbix/zabbix-agent2:7.4-latest
-        ports:
-        - containerPort: 10050
-          name: zabbix-agent
+        image: zabbix/zabbix-agent2:latest
         env:
         - name: ZBX_HOSTNAME
-          value: "k3s-node-01"
+          value: "k3s-observability"
         - name: ZBX_SERVER_HOST
-          value: "192.168.1.20" 
+          value: "127.0.0.1,192.168.1.20" # Adicionei o loopback e seu IP real
+        - name: ZBX_PASSIVE_ALLOW
+          value: "0.0.0.0/0"
         securityContext:
-          privileged: true 
+          privileged: true
+        ports:
+        - containerPort: 10050
+          hostPort: 10050
+          name: zabbix-agent
