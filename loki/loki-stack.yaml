@@ -32,12 +32,11 @@ metadata:
   name: loki
   namespace: logging
 spec:
-  type: NodePort      # Mudança aqui
-  ports:
-    - port: 3100
-      targetPort: 3100
-      nodePort: 31100 # Porta fixa para facilitar (entre 30000-32767)
-      protocol: TCP
-      name: http-metrics
+  type: NodePort
   selector:
     app: loki
+  ports:
+    - name: http-metrics
+      port: 3100
+      targetPort: 3100
+      nodePort: 31100 
