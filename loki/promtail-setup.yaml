@@ -1,0 +1,69 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: promtail
+  namespace: logging
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: promtail-clusterrole
+rules:
+  - apiGroups: [""]
+    resources: ["nodes", "nodes/proxy", "services", "endpoints", "pods"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: promtail-clusterrole-binding
+subjects:
+  - kind: ServiceAccount
+    name: promtail
+    namespace: logging
+roleRef:
+  kind: ClusterRole
+  name: promtail-clusterrole
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: promtail
+  namespace: logging
+spec:
+  selector:
+    matchLabels:
+      app: promtail
+  template:
+    metadata:
+      labels:
+        app: promtail
+    spec:
+      serviceAccountName: promtail
+      containers:
+        - name: promtail
+          image: grafana/promtail:2.9.0
+          args:
+            - -config.file=/etc/promtail/promtail.yaml
+          env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log
+            - name: config
+              mountPath: /etc/promtail
+            - name: positions
+              mountPath: /run/promtail
+      volumes:
+        - name: logs
+          hostPath:
+            path: /var/log
+        - name: config
+          configMap:
+            name: promtail-config
+        - name: positions
+          emptyDir: {}
