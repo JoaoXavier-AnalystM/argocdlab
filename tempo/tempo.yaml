@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tempo
+  namespace: tracing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tempo
+  template:
+    metadata:
+      labels:
+        app: tempo
+    spec:
+      containers:
+      - name: tempo
+        image: grafana/tempo:latest
+        args:
+        - "-config.file=/etc/tempo/tempo-config.yaml"
+        ports:
+        - containerPort: 3200 # HTTP (Grafana)
+        - containerPort: 4317 # OTLP gRPC (Receber traces)
+        volumeMounts:
+        - name: config
+          mountPath: /etc/tempo
+      volumes:
+      - name: config
+        configMap:
+          name: tempo-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tempo
+  namespace: tracing
+spec:
+  type: NodePort
+  selector:
+    app: tempo
+  ports:
+    - name: http-grafana
+      port: 3200
+      targetPort: 3200
+      nodePort: 31200 #
+    - name: otlp-grpc
+      port: 4317
+      targetPort: 4317
