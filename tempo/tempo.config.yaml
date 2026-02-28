@@ -7,17 +7,25 @@ data:
   tempo-config.yaml: |
     server:
       http_listen_port: 3200
+
     distributor:
       receivers:
         otlp:
           protocols:
             grpc:
             http:
+
+    ingester:
+      max_block_duration: 5m               # Tempo que o trace fica na memória
+
     storage:
       trace:
-        backend: local
+        backend: local                     # Onde os traces são salvos
         local:
           path: /var/tempo/traces
+        wal:                               # Write Ahead Log (Necessário para não perder dados)
+          path: /var/tempo/wal
+
     compactor:
       compaction:
-        block_retention: 24h
+        block_retention: 24h               # Quanto tempo guardar os traces
