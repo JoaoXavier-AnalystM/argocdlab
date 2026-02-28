@@ -23,13 +23,18 @@ spec:
         volumeMounts:
         - name: config
           mountPath: /etc/tempo
-        - name: data  # Adicione este mount
+        - name: data  
+          mountPath: /var/tempo
+      volumeMounts:
+        - name: config
+          mountPath: /etc/tempo
+        - name: data
           mountPath: /var/tempo
       volumes:
       - name: config
         configMap:
           name: tempo-config
-      - name: data    # Crie este volume temporário
+      - name: data
         emptyDir: {}
 ---
 apiVersion: v1
