@@ -46,7 +46,8 @@ spec:
     - name: http-grafana
       port: 3200
       targetPort: 3200
-      nodePort: 31200
+      nodePort: 31200   # Porta para o Grafana ler os Traces
     - name: otlp-grpc
       port: 4317
       targetPort: 4317
+      nodePort: 31217   
