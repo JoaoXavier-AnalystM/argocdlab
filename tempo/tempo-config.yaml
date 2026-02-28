@@ -16,16 +16,15 @@ data:
             http:
 
     ingester:
-      max_block_duration: 5m               # Tempo que o trace fica na memória
+      max_block_duration: 5m
 
     storage:
       trace:
-        backend: local                     # Onde os traces são salvos
+        backend: local
         local:
           path: /var/tempo/traces
-        wal:                               # Write Ahead Log (Necessário para não perder dados)
+        wal:
           path: /var/tempo/wal
-
-    compactor:
-      compaction:
-        block_retention: 24h               # Quanto tempo guardar os traces
+    
+    # Nas versões novas, o compactor foi movido ou automatizado. 
+    # Vamos removê-lo por enquanto para estabilizar o Pod.

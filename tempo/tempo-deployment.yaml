@@ -25,11 +25,7 @@ spec:
           mountPath: /etc/tempo
         - name: data  
           mountPath: /var/tempo
-      volumeMounts:
-        - name: config
-          mountPath: /etc/tempo
-        - name: data
-          mountPath: /var/tempo
+      # O erro estava aqui: havia um volumeMounts fora do container. Removi.
       volumes:
       - name: config
         configMap:
@@ -50,7 +46,7 @@ spec:
     - name: http-grafana
       port: 3200
       targetPort: 3200
-      nodePort: 31200 #
+      nodePort: 31200
     - name: otlp-grpc
       port: 4317
       targetPort: 4317
