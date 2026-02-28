@@ -16,18 +16,21 @@ spec:
       containers:
       - name: tempo
         image: grafana/tempo:latest
-        args:
-        - "-config.file=/etc/tempo/tempo-config.yaml"
+        args: ["-config.file=/etc/tempo/tempo-config.yaml"]
         ports:
-        - containerPort: 3200 # HTTP (Grafana)
-        - containerPort: 4317 # OTLP gRPC (Receber traces)
+        - containerPort: 3200
+        - containerPort: 4317
         volumeMounts:
         - name: config
           mountPath: /etc/tempo
+        - name: data  # Adicione este mount
+          mountPath: /var/tempo
       volumes:
       - name: config
         configMap:
           name: tempo-config
+      - name: data    # Crie este volume temporário
+        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
