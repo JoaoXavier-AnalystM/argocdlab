@@ -16,14 +16,12 @@ spec:
         app: vault
     spec:
       securityContext:
-        fsGroup: 1000 # Corrigido: Agora está abaixo do securityContext
+        fsGroup: 1000
       containers:
       - name: vault
         image: hashicorp/vault:1.15
-        args: ["server"] # Corrigido: Agora está no nível do container
+        args: ["server"]
         env:
-        - name: VAULT_DEV_ROOT_TOKEN_ID
-          value: "root"
         - name: VAULT_LOCAL_CONFIG
           value: |
             storage "file" {
@@ -33,6 +31,8 @@ spec:
               address     = "0.0.0.0:8200"
               tls_disable = 1
             }
+            # O SEGREDO ESTÁ AQUI:
+            disable_mlock = true
             ui = true
         ports:
         - containerPort: 8200
