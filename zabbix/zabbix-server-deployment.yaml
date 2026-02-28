@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: zabbix-server
-          image: zabbix/zabbix-server-pgsql:ubuntu-6.0-latest
+          image: zabbix/zabbix-server-pgsql:alpine-7.4-latest
           ports:
             - containerPort: 10051
           env:
