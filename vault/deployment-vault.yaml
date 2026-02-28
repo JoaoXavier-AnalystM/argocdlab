@@ -16,10 +16,11 @@ spec:
         app: vault
     spec:
       securityContext:
-      fsGroup: 1000 # Dá permissão ao grupo do Vault para ler/escrever no volume
+        fsGroup: 1000 # Corrigido: Agora está abaixo do securityContext
       containers:
       - name: vault
         image: hashicorp/vault:1.15
+        args: ["server"] # Corrigido: Agora está no nível do container
         env:
         - name: VAULT_DEV_ROOT_TOKEN_ID
           value: "root"
@@ -33,7 +34,6 @@ spec:
               tls_disable = 1
             }
             ui = true
-        args: ["server"]
         ports:
         - containerPort: 8200
         volumeMounts:
