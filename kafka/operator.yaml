@@ -1,0 +1,5 @@
+# 01-operator.yaml
+# Este arquivo aplica o bundle de instalação do Strimzi
+# Recomendo usar o Helm via ArgoCD para o Operator, 
+# mas se quiser via YAML, aponte o ArgoCD para o link oficial:
+# https://strimzi.io/install/latest?namespace=kafka

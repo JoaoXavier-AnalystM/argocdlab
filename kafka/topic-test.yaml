@@ -1,0 +1,13 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: logs-do-sistema
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: meu-cluster # DEVE ser o mesmo nome do seu 'Kafka' no 02-cluster.yaml
+spec:
+  partitions: 3    # Boa prática para aprender sobre paralelismo
+  replicas: 1      # Como seu k3s é 1 node ou pequeno, usamos 1
+  config:
+    retention.ms: 604800000 # 7 dias de retenção
+    segment.bytes: 1073741824

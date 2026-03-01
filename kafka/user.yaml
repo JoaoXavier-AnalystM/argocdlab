@@ -1,0 +1,25 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: joao-admin
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: meu-cluster # Deve bater com o nome do cluster acima
+spec:
+  authentication:
+    type: scram-sha-512
+  authorization: # Dá permissão total para este usuário (Admin)
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: "*"
+          patternType: literal
+        operation: All
+        host: "*"
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+        host: "*"
