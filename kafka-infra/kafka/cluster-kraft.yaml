@@ -29,4 +29,4 @@ spec:
       storage.layout: kraft
   entityOperator:
     topicOperator: {}
-    userOperator: {}
+    userOperator: {} 
