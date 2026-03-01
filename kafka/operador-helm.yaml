@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: strimzi-operator
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: strimzi-kafka-operator
+    repoURL: https://strimzi.io/charts/
+    targetRevision: 0.45.0 # Versão atualizada e estável
+    helm:
+      parameters:
+        - name: watchAnyNamespace
+          value: "true" # Permite que o operator veja seu namespace 'kafka'
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kafka # Onde o operator vai morar
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true # Garante que o namespace 'kafka' seja criado se não existir
