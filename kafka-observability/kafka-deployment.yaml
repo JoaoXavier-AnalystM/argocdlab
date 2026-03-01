@@ -42,7 +42,7 @@ spec:
               mountPath: /etc/jmx
 
         - name: jmx-exporter
-          image: bitnami/jmx-exporter:latest
+          image: bitnami/jmx-exporter:0.16.1-debian-11-r0
           ports:
             - containerPort: 5556
           volumeMounts:
