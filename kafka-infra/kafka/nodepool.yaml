@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaNodePool
 metadata:
-  name: pool-aprendizado
+  name: pool-a
   namespace: kafka
   labels:
     strimzi.io/cluster: cluster-metrics

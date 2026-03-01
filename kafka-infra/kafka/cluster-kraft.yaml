@@ -5,7 +5,7 @@ metadata:
   namespace: kafka
 spec:
   kafka:
-    version: 4.1.1 # Versão suportada pelo seu Operator atual
+    version: 4.1.1
     metadataVersion: 4.1-IV2
     listeners:
       - name: plain
