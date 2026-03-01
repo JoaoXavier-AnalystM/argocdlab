@@ -22,7 +22,7 @@ spec:
         - containerPort: 8080
         env:
         - name: KAFKA_CLUSTERS_0_NAME
-          value: "k3s-kafka"
+          value: "cluster-metrics"
         - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
           value: "cluster-metrics-kafka-bootstrap:9092"
         - name: KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL
