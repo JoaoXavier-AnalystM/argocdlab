@@ -4,16 +4,9 @@ metadata:
   name: joao-admin
   namespace: kafka
   labels:
-    strimzi.io/cluster: meu-cluster
+    strimzi.io/cluster: cluster-metrics
 spec:
   authentication:
     type: scram-sha-512
   authorization:
     type: simple
-    acls:
-      - resource:
-          type: topic
-          name: "*"
-          patternType: literal
-        operation: All
-        host: "*"

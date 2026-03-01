@@ -3,11 +3,13 @@ kind: Kafka
 metadata:
   name: cluster-metrics
   namespace: kafka
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   kafka:
     version: 3.7.0
     replicas: 1
-    metadataVersion: 3.7-IV4 # Define a versão de metadados para o KRaft
+    metadataVersion: 3.7-IV4
     listeners:
       - name: plain
         port: 9092
