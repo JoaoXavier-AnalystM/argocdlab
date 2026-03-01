@@ -24,14 +24,13 @@ spec:
         - name: KAFKA_CLUSTERS_0_NAME
           value: "k3s-kafka"
         - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
-          value: "meu-cluster-kafka-bootstrap:9092"
+          value: "cluster-metrics-kafka-bootstrap:9092" # Nome corrigido
         - name: KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL
           value: "SASL_PLAINTEXT"
         - name: KAFKA_CLUSTERS_0_PROPERTIES_SASL_MECHANISM
           value: "SCRAM-SHA-512"
-        # Aqui a mágica: ele pega o usuário e senha do Secret criado pelo Strimzi
         - name: KAFKA_CLUSTERS_0_PROPERTIES_SASL_JAAS_CONFIG
           valueFrom:
             secretKeyRef:
               name: joao-admin
-              key: sasl.jaas.config
+              key: sasl.jaas.config # Pega a config de auth direto do secret
