@@ -6,7 +6,7 @@ metadata:
 spec:
   kafka:
     version: 4.1.1
-    metadataVersion: 4.0-IV1
+    # REMOVEMOS a metadataVersion para evitar o erro de "invalid" que vimos no log
     listeners:
       - name: plain
         port: 9092
@@ -29,4 +29,4 @@ spec:
       storage.layout: kraft
   entityOperator:
     topicOperator: {}
-    userOperator: {} 
+    userOperator: {}
