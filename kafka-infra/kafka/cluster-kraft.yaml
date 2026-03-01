@@ -3,13 +3,10 @@ kind: Kafka
 metadata:
   name: cluster-metrics
   namespace: kafka
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
 spec:
   kafka:
-    version: 3.7.0
-    replicas: 1
-    metadataVersion: 3.7-IV4
+    version: 4.1.1 # Versão suportada pelo seu Operator atual
+    metadataVersion: 4.1-IV2
     listeners:
       - name: plain
         port: 9092
@@ -25,13 +22,11 @@ spec:
           type: scram-sha-512
         configuration:
           bootstrap:
-            nodePort: 30094 # Porta para acesso externo
+            nodePort: 30094
     config:
       offsets.topic.replication.factor: 1
       transaction.state.log.replication.factor: 1
       storage.layout: kraft
-    storage:
-      type: ephemeral # Dados temporários para aprendizado
   entityOperator:
     topicOperator: {}
     userOperator: {}

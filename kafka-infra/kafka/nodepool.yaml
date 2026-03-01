@@ -1,0 +1,14 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: pool-aprendizado
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: cluster-metrics
+spec:
+  replicas: 1
+  roles:
+    - controller
+    - broker
+  storage:
+    type: ephemeral # Perfeito para o seu aprendizado no k3s
