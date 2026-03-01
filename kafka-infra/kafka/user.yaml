@@ -4,21 +4,15 @@ metadata:
   name: joao-admin
   namespace: kafka
   labels:
-    strimzi.io/cluster: cluster-metrics # Deve bater com o nome do cluster acima
+    strimzi.io/cluster: meu-cluster
 spec:
   authentication:
     type: scram-sha-512
-  authorization: # Dá permissão total para este usuário (Admin)
+  authorization:
     type: simple
     acls:
       - resource:
           type: topic
-          name: "*"
-          patternType: literal
-        operation: All
-        host: "*"
-      - resource:
-          type: group
           name: "*"
           patternType: literal
         operation: All
