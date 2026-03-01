@@ -5,4 +5,3 @@ resources:
   - kafka-jmx-configmap.yaml
   - kafka-deployment.yaml
   - kafka-service.yaml
-  - kafka-servicemonitor.yaml
