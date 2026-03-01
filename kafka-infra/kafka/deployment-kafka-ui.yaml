@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: kafka-ui
   namespace: kafka
-  annotations:
-    argocd.argoproj.io/sync-wave: "5"
 spec:
   replicas: 1
   selector:
@@ -24,7 +22,7 @@ spec:
         - name: KAFKA_CLUSTERS_0_NAME
           value: "k3s-kafka"
         - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
-          value: "cluster-metrics-kafka-bootstrap:9092" # Nome corrigido
+          value: "cluster-metrics-kafka-bootstrap:9092"
         - name: KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL
           value: "SASL_PLAINTEXT"
         - name: KAFKA_CLUSTERS_0_PROPERTIES_SASL_MECHANISM
@@ -33,4 +31,18 @@ spec:
           valueFrom:
             secretKeyRef:
               name: joao-admin
-              key: sasl.jaas.config # Pega a config de auth direto do secret
+              key: sasl.jaas.config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-ui-service
+  namespace: kafka
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 30180
+  selector:
+    app: kafka-ui

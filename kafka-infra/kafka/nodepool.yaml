@@ -11,4 +11,4 @@ spec:
     - controller
     - broker
   storage:
-    type: ephemeral # Perfeito para o seu aprendizado no k3s
+    type: ephemeral
