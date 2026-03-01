@@ -15,15 +15,15 @@ spec:
           type: topic
           name: "*"
           patternType: literal
-        operation: All
+        operation: All # <--- Garantir que está aqui
         host: "*"
       - resource:
           type: group
           name: "*"
           patternType: literal
-        operation: All
+        operation: All # <--- Garantir que está aqui
         host: "*"
       - resource:
           type: cluster
-        operation: All
+        operation: All # <--- Adicione explicitamente aqui também!
         host: "*"
