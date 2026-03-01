@@ -10,3 +10,23 @@ spec:
     type: scram-sha-512
   authorization:
     type: simple
+    acls:
+      # Permissão para Tópicos
+      - resource:
+          type: topic
+          name: "*"
+          patternType: literal
+        operation: All
+        host: "*"
+      # Permissão para Grupos de Consumidores
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+        host: "*"
+      # Permissão para o próprio Cluster
+      - resource:
+          type: cluster
+        operation: All
+        host: "*"
