@@ -6,7 +6,8 @@ metadata:
 spec:
   kafka:
     version: 4.1.1
-    # REMOVEMOS a metadataVersion para evitar o erro de "invalid" que vimos no log
+    authorization:
+      type: simple
     listeners:
       - name: plain
         port: 9092
