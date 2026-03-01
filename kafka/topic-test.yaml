@@ -4,7 +4,7 @@ metadata:
   name: logs-do-sistema
   namespace: kafka
   labels:
-    strimzi.io/cluster: meu-cluster # DEVE ser o mesmo nome do seu 'Kafka' no 02-cluster.yaml
+    strimzi.io/cluster: cluster-metrics 
 spec:
   partitions: 3    # Boa prática para aprender sobre paralelismo
   replicas: 1      # Como seu k3s é 1 node ou pequeno, usamos 1

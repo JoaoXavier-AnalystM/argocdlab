@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
-  name: meu-cluster
+  name: cluster-metrics
   namespace: kafka
 spec:
   kafka:

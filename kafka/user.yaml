@@ -4,7 +4,7 @@ metadata:
   name: joao-admin
   namespace: kafka
   labels:
-    strimzi.io/cluster: meu-cluster # Deve bater com o nome do cluster acima
+    strimzi.io/cluster: cluster-metrics # Deve bater com o nome do cluster acima
 spec:
   authentication:
     type: scram-sha-512
