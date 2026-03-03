@@ -60,14 +60,14 @@ O k3s já inclui:
 - Metrics Server
 - containerd como runtime
 
-![k3s.png](/kubernetes-observability-lab/imagens/k3s.png)
+![k3s.png](imagens/k3s.png)
 +
 ---
 ## 🔄 GitOps
 
 Utilizando **Argo CD**, todo o estado do cluster é versionado em Git.
 
-![argocd.png](/kubernetes-observability-lab/imagens/argocd.png)
+![argocd.png](imagens/argocd.png)
 
 ---
 
