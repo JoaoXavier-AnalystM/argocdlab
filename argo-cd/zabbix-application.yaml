@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/JoaoXavier-AnalystM/argocdlab.git'
+    repoURL: 'https://github.com/JoaoXavier-AnalystM/kubernetes-observability-lab.git'
     targetRevision: HEAD
     path: zabbix
   destination:
