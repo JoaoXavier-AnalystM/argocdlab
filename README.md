@@ -61,11 +61,14 @@ O k3s já inclui:
 - containerd como runtime
 
 ![alt text](/kubernetes-observability-lab/imagens/k3s.png)
++
 ---
 ## 🔄 GitOps
 
 Utilizando **Argo CD**, todo o estado do cluster é versionado em Git.
+
 ![ter](/kubernetes-observability-lab/imagens/argocd.png)
+
 ---
 
 ## 📊 Observabilidade – 3 Pilares
