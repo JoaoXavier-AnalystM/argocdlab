@@ -1,7 +1,5 @@
 # 🚀 Homelab Observability Platform (k3s + GitOps)
 
----
-
 ## 🎯 Objetivo
 
 Projetar e operar uma plataforma Kubernetes baseada em **k3s**:
@@ -12,11 +10,21 @@ Projetar e operar uma plataforma Kubernetes baseada em **k3s**:
 - Gestão segura de segredos
 - Exposição via Ingress
 
-O objetivo é simular um ambiente de produção para estudos em **SRE / Plataform Engineering /DevOps**.
+O objetivo é simular um ambiente de produção para estudos em **DevOps / SRE /Platform Engineering**.
+
+---
+Esta seção documenta o processo de instalação do cluster Kubernetes utilizando **k3s**.
 
 ---
 
-## 🏗 Arquitetura
+### 📌 Ambiente
+- Proxmox:
+    - VM Linux (Ubuntu 24.04.4)
+    - 4 vCPU
+    - 8GB RAM
+- Cloudflare Tunnels
+
+---
 
 ### Stack Principal
 
@@ -33,25 +41,31 @@ O objetivo é simular um ambiente de produção para estudos em **SRE / Platafor
 | Storage | Local Path Provisioner | Provisionamento de volumes |
 
 ---
+## ☸️ Kubernetes com k3s
 
+A plataforma utiliza **k3s** como distribuição Kubernetes leve e otimizada para ambientes com recursos limitados.
+
+### 🎯 Motivo da escolha
+
+- Instalação simplificada
+- Baixo consumo de recursos
+- Componentes essenciais embarcados
+- Ideal para homelab e ambientes de estudo avançado
+
+O k3s já inclui:
+
+- CoreDNS
+- Traefik (Ingress Controller)
+- Local Path Provisioner (Storage)
+- Metrics Server
+- containerd como runtime
+
+![alt text](image.png)
+---
 ## 🔄 GitOps
 
 Utilizando **Argo CD**, todo o estado do cluster é versionado em Git.
-
-### Fluxo
-
-1. Commit no repositório
-2. Argo CD detecta alteração
-3. Reconciliação automática
-4. Estado desejado aplicado no cluster
-
-Isso garante:
-
-- Reprodutibilidade
-- Auditoria
-- Controle de mudanças
-- Redução de configuração manual
-
+![ter](image-1.png)
 ---
 
 ## 📊 Observabilidade – 3 Pilares
@@ -60,7 +74,7 @@ Isso garante:
 - Prometheus
 - Node Exporter
 - Kube State Metrics
-- Alertmanager
+- Grafana
 
 ### 📜 Logs
 - Loki
@@ -68,13 +82,6 @@ Isso garante:
 
 ### 🔎 Traces
 - Tempo
-
-Permite correlação entre:
-
-- Performance
-- Eventos
-- Erros
-- Fluxo de requisições
 
 ---
 
@@ -94,8 +101,6 @@ Simula cenários corporativos reais onde múltiplas ferramentas coexistem.
 ## 🔐 Segurança
 
 - HashiCorp Vault para gestão de segredos
-- Separação por namespaces
-- Exposição controlada via Traefik
 
 ---
 
@@ -117,6 +122,7 @@ Alguns cenários enfrentados:
 
 - ImagePullBackOff (Kafka)
 - Restart loops
+- Expose services
 - Problemas de storage
 - Ajustes de recursos (CPU/Memória)
 - Configuração de Ingress
@@ -125,10 +131,12 @@ Alguns cenários enfrentados:
 
 ## 🚀 Próximos Passos
 
-- [ ] OpenTelemetry Collector
-- [ ] Kafka funcional + UI
+- [ ] Upgrade recursos
+- [ ] Alertmanager
 - [ ] Backup Strategy
 - [ ] CI/CD pipeline
 - [ ] Multi-node cluster
+- [ ] OpenTelemetry Collector
+- [ ] Kafka funcional + UI
 
 ---
