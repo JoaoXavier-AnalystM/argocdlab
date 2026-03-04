@@ -13,20 +13,25 @@ Projetar e operar uma plataforma Kubernetes baseada em **k3s**:
 O objetivo é simular um ambiente de produção para estudos em **DevOps / SRE /Platform Engineering**.
 
 ---
-Esta seção documenta o processo de instalação do cluster Kubernetes utilizando **k3s**.
-
----
 
 ### 📌 Ambiente
 - Proxmox:
-    - VM Linux (Ubuntu 24.04.4)
-    - 4 vCPU
-    - 8GB RAM
-- Cloudflare Tunnels
+    - VM Zabbix(Ubuntu 24.04.4)
+        - 2 vCPU
+        - 8GB RAM
+    - VM LTGM(Ubuntu 24.04.4)
+        - 2 vCPU
+        - 8GB RAM
+    - VM K3s (Ubuntu 24.04.4)
+        - 4 vCPU
+        - 8GB RAM
+    - LXC Cloudflare Tunnels
+        - 1 vCPU
+        - 512MB RAM
 
 ---
 
-### Stack Principal
+### Stack de Ferramentas
 
 | Camada | Ferramenta | Função |
 |--------|------------|--------|
@@ -39,6 +44,12 @@ Esta seção documenta o processo de instalação do cluster Kubernetes utilizan
 | Secrets | Vault | Gestão segura de segredos |
 | Ingress | Traefik | Exposição de serviços |
 | Storage | Local Path Provisioner | Provisionamento de volumes |
+
+| Camada | Ferramenta | Função |
+|--------|------------|--------|
+| Monitoramento Central | Zabbix Server | Servidor principal responsável pela consolidação de métricas, alertas e gerenciamento de hosts, rodando fora do cluster k3s |
+| Monitoramento Legado | Prometheus + Grafana | Coleta, armazenamento e visualização de métricas de ambientes externos ao cluster k3s, funcionando como monitoramento legado |
+| Exposição Externa | LXC Cloudflare Tunnels | Publicação segura de serviços internos para a internet sem exposição direta de portas públicas |
 
 ---
 ## ☸️ Kubernetes com k3s
