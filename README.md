@@ -31,8 +31,10 @@ O objetivo é simular um ambiente de produção para estudos em **DevOps / SRE /
 
 ---
 
-### Stack de Ferramentas
+### Camadas
 
+1. Stack de Ferramentas K3s
+   
 | Camada | Ferramenta | Função |
 |--------|------------|--------|
 | Kubernetes | k3s | Orquestração de containers |
@@ -45,10 +47,12 @@ O objetivo é simular um ambiente de produção para estudos em **DevOps / SRE /
 | Ingress | Traefik | Exposição de serviços |
 | Storage | Local Path Provisioner | Provisionamento de volumes |
 
+2. Camada On Premises(Legado)
+   
 | Camada | Ferramenta | Função |
 |--------|------------|--------|
-| Monitoramento Central | Zabbix Server | Servidor principal responsável pela consolidação de métricas, alertas e gerenciamento de hosts, rodando fora do cluster k3s |
-| Monitoramento Legado | Prometheus + Grafana | Coleta, armazenamento e visualização de métricas de ambientes externos ao cluster k3s, funcionando como monitoramento legado |
+| Monitoramento Infraestrutura | Zabbix Server | Servidor principal responsável pela consolidação de métricas, alertas e gerenciamento de hosts, rodando fora e dentro cluster k3s |
+| Monitoramento Metrics + Dashboard | Prometheus + Grafana | Coleta, armazenamento e visualização de métricas de ambientes externos e internos do cluster k3s|
 | Exposição Externa | LXC Cloudflare Tunnels | Publicação segura de serviços internos para a internet sem exposição direta de portas públicas |
 
 ---
