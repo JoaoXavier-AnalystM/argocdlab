@@ -1,4 +1,4 @@
-# 🚀 Homelab Observability Platform (k3s + GitOps)
+# 🚀 Homelab Observability Platform
 
 ## 🎯 Objetivo
 
@@ -10,7 +10,7 @@ Projetar e operar uma plataforma Kubernetes baseada em **k3s**:
 - Gestão segura de segredos
 - Exposição via Ingress
 
-O objetivo é simular um ambiente de produção para estudos em **DevOps / SRE /Platform Engineering**.
+O objetivo é simular um ambiente de produção para estudos em **DevOps / SRE / Platform Engineering**.
 
 ---
 
