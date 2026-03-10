@@ -5,10 +5,12 @@ alertmanager:
   enabled: true
   service:
     type: NodePort
+    nodePort: 32093
 
 prometheus:
   service:
     type: NodePort
+    nodePort: 32090
 
   prometheusSpec:
     retention: 7d

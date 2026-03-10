@@ -1,21 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus
+  name: prometheus-crds
   namespace: argocd
+
 spec:
   project: default
 
   source:
     repoURL: https://github.com/JoaoXavier-AnalystM/kubernetes-observability-lab
-    targetRevision: main
-    path: prometheus
-
-    helm:
-      chart: kube-prometheus-stack
-      repoURL: https://prometheus-community.github.io/helm-charts
-      valueFiles:
-        - values.yaml
+    targetRevision: master
+    path: components/monitoring/prometheus-crds
 
   destination:
     server: https://kubernetes.default.svc
