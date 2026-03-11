@@ -13,23 +13,50 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Install Helm
         run: |
-          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          curl -sSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-      - name: Download Zabbix Chart
+      - name: Show Helm version
+        run: helm version
+
+      - name: Verify values.yaml exists
         run: |
+          ls -lah zabbix/zabbix-kubernetes-helm/
+          cat zabbix/zabbix-kubernetes-helm/values.yaml
+
+      - name: Download Zabbix Helm Chart
+        run: |
+          echo "Downloading chart..."
           curl -L $ZABBIX_CHART_URL -o zabbix-chart.tgz
+          ls -lh
 
-      - name: Helm lint
+      - name: Helm lint validation
         run: |
+          echo "Running helm lint..."
           helm lint zabbix-chart.tgz \
-          -f zabbix/zabbix-kubernetes-helm/values.yaml
+            -f zabbix/zabbix-kubernetes-helm/values.yaml \
+            --debug
 
-      - name: Helm template validation
+      - name: Render Kubernetes manifests
         run: |
+          echo "Rendering manifests..."
           helm template zabbix zabbix-chart.tgz \
-          -f zabbix/zabbix-kubernetes-helm/values.yaml \
-          > rendered.yaml
+            -f zabbix/zabbix-kubernetes-helm/values.yaml \
+            --debug \
+            > rendered.yaml
+
+      - name: Show rendered manifests preview
+        run: |
+          echo "Preview first 50 lines of rendered manifest:"
+          head -n 50 rendered.yaml
+
+      - name: Upload rendered manifest artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-kubernetes-manifest
+          path: rendered.yaml
