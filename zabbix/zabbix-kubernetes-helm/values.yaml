@@ -327,9 +327,9 @@ zabbixAgent:
 
   service:
     type: ClusterIP
-    port: 10150
-    targetPort: 10150
-    nodePort: 10150
+    port: 10050
+    targetPort: 10050
+    nodePort: 10050
     portName: zabbix-agent
     listenOnAllInterfaces: true
     annotations:
