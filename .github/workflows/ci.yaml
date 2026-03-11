@@ -24,7 +24,7 @@ jobs:
     steps:
 
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     - name: Install Helm
       run: |
@@ -66,7 +66,7 @@ jobs:
         grep "kind:" rendered.yaml | sort | uniq
 
     - name: Upload rendered manifests
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: zabbix-manifest-k8s-${{ matrix.kubernetes-version }}
         path: rendered.yaml
