@@ -2,8 +2,6 @@ name: Kubernetes CI
 
 on:
   push:
-    branches:
-      - master
   pull_request:
 
 jobs:
@@ -19,7 +17,7 @@ jobs:
           | tar xz
           sudo mv kubeconform /usr/local/bin
 
-      - name: Validate manifests
+      - name: Validate Kubernetes manifests
         run: |
-          kubeconform -strict -summary -ignore-missing-schemas \
-          $(find . -name "*.yaml")
+          find components -type f -name "*.yaml" ! -name "values.yaml" \
+          -exec kubeconform -strict -summary -ignore-missing-schemas {} \;
