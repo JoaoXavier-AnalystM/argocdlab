@@ -8,17 +8,20 @@ alertmanager:
     nodePort: 32093
 
 prometheus:
+  enabled: true
   service:
     type: NodePort
     nodePort: 32090
 
   prometheusSpec:
     retention: 7d
+
     storageSpec:
       volumeClaimTemplate:
         spec:
           storageClassName: local-path
-          accessModes: ["ReadWriteOnce"]
+          accessModes:
+            - ReadWriteOnce
           resources:
             requests:
               storage: 4Gi
