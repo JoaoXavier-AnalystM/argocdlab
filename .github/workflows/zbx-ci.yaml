@@ -1,0 +1,35 @@
+name: Kubernetes CI
+
+on:
+  push:
+    paths:
+      - "zabbix-kubernetes-helm/values.yaml"
+
+env:
+  ZABBIX_CHART_URL: https://cdn.zabbix.com/zabbix/integrations/kubernetes-helm/7.4/zabbix-helm-chart-1.6.8.tgz
+
+jobs:
+  helm-validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      - name: Download Zabbix Chart
+        run: |
+          curl -L $ZABBIX_CHART_URL -o zabbix-chart.tgz
+
+      - name: Helm lint
+        run: |
+          helm lint zabbix-chart.tgz \
+          -f zabbix-kubernetes-helm/values.yaml
+
+      - name: Helm template validation
+        run: |
+          helm template zabbix zabbix-chart.tgz \
+          -f zabbix-kubernetes-helm/values.yaml \
+          > rendered.yaml
