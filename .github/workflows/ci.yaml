@@ -12,7 +12,14 @@ env:
 
 jobs:
   helm-ci:
+
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        kubernetes-version: ["1.30.0", "1.34.5"]
+
+    name: Kubernetes ${{ matrix.kubernetes-version }}
 
     steps:
 
@@ -34,9 +41,8 @@ jobs:
     - name: Download Zabbix Chart
       run: |
         curl -L $CHART_URL -o chart.tgz
-        tar -tzf chart.tgz | head
 
-    - name: Lint Helm Chart
+    - name: Helm lint
       run: |
         helm lint chart.tgz \
         -f $VALUES_FILE
@@ -44,21 +50,23 @@ jobs:
     - name: Render Helm templates
       run: |
         helm template zabbix chart.tgz \
-        -f $VALUES_FILE \
         --namespace monitoring \
+        -f $VALUES_FILE \
         > rendered.yaml
 
-    - name: Validate Kubernetes manifests
+    - name: Validate manifests for Kubernetes ${{ matrix.kubernetes-version }}
       run: |
-        kubeconform -summary rendered.yaml
+        kubeconform \
+          -kubernetes-version ${{ matrix.kubernetes-version }} \
+          -summary rendered.yaml
 
-    - name: Show manifest preview
+    - name: Show generated resources
       run: |
-        echo "First resources generated:"
-        grep "kind:" rendered.yaml | head
+        echo "Resources generated:"
+        grep "kind:" rendered.yaml | sort | uniq
 
     - name: Upload rendered manifests
       uses: actions/upload-artifact@v4
       with:
-        name: zabbix-k8s-manifests
+        name: zabbix-manifest-k8s-${{ matrix.kubernetes-version }}
         path: rendered.yaml
