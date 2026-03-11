@@ -3,7 +3,7 @@ name: Kubernetes CI
 on:
   push:
     paths:
-      - "zabbix-kubernetes-helm/values.yaml"
+      - "zabbix/zabbix-kubernetes-helm/values.yaml"
 
 env:
   ZABBIX_CHART_URL: https://cdn.zabbix.com/zabbix/integrations/kubernetes-helm/7.4/zabbix-helm-chart-1.6.8.tgz
@@ -26,10 +26,10 @@ jobs:
       - name: Helm lint
         run: |
           helm lint zabbix-chart.tgz \
-          -f zabbix-kubernetes-helm/values.yaml
+          -f zabbix/zabbix-kubernetes-helm/values.yaml
 
       - name: Helm template validation
         run: |
           helm template zabbix zabbix-chart.tgz \
-          -f zabbix-kubernetes-helm/values.yaml \
+          -f zabbix/zabbix-kubernetes-helm/values.yaml \
           > rendered.yaml
