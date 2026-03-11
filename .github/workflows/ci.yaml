@@ -2,22 +2,61 @@ name: Kubernetes CI
 
 on:
   push:
-  pull_request:
+    paths:
+      - "zabbix/zabbix-kubernetes-helm/values.yaml"
+
+env:
+  ZABBIX_CHART_URL: https://cdn.zabbix.com/zabbix/integrations/kubernetes-helm/7.4/zabbix-helm-chart-1.6.8.tgz
 
 jobs:
-  validate:
+  helm-validate:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
 
-      - name: Install kubeconform
-        run: |
-          curl -L https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz \
-          | tar xz
-          sudo mv kubeconform /usr/local/bin
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Validate Kubernetes manifests
+      - name: Install Helm
         run: |
-          find components -type f -name "*.yaml" ! -name "values.yaml" \
-          -exec kubeconform -strict -summary -ignore-missing-schemas {} \;
+          curl -sSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      - name: Show Helm version
+        run: helm version
+
+      - name: Verify values.yaml exists
+        run: |
+          ls -lah zabbix/zabbix-kubernetes-helm/
+          cat zabbix/zabbix-kubernetes-helm/values.yaml
+
+      - name: Download Zabbix Helm Chart
+        run: |
+          echo "Downloading chart..."
+          curl -L $ZABBIX_CHART_URL -o zabbix-chart.tgz
+          ls -lh
+
+      - name: Helm lint validation
+        run: |
+          echo "Running helm lint..."
+          helm lint zabbix-chart.tgz \
+            -f zabbix/zabbix-kubernetes-helm/values.yaml \
+            --debug
+
+      - name: Render Kubernetes manifests
+        run: |
+          echo "Rendering manifests..."
+          helm template zabbix zabbix-chart.tgz \
+            -f zabbix/zabbix-kubernetes-helm/values.yaml \
+            --debug \
+            > rendered.yaml
+
+      - name: Show rendered manifests preview
+        run: |
+          echo "Preview first 50 lines of rendered manifest:"
+          head -n 50 rendered.yaml
+
+      - name: Upload rendered manifest artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-kubernetes-manifest
+          path: rendered.yaml
